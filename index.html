@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>One Night Friend</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+      background-color: black;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      overflow: hidden; /* Disable scrolling for the entire page */
+    }
+
+    #username-overlay {
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      width: 90%;
+      max-width: 400px;
+      padding: 20px;
+      background-color: black;
+      border: 2px solid #ffc107;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+    }
+
+    #username-overlay h1 {
+      font-size: 20px;
+      margin-bottom: 15px;
+      color: #ffc107;
+    }
+
+    #username-overlay p {
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 20px;
+      color: #cccccc;
+    }
+
+    #username-input {
+      width: 80%;
+      max-width: 300px;
+      padding: 10px;
+      font-size: 16px;
+      margin-bottom: 20px;
+      border: 1px solid #ffc107;
+      border-radius: 5px;
+      background: black;
+      color: white;
+      text-align: center;
+      outline: none;
+    }
+
+    #start-button {
+      width: 80%;
+      max-width: 300px;
+      padding: 12px;
+      background: #ffc107;
+      color: black;
+      border: none;
+      font-size: 16px;
+      font-weight: bold;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+
+    #start-button:hover {
+      background: #e6a800;
+    }
+
+    #chat-container {
+      display: none;
+      flex-direction: column;
+      width: 90%;
+      max-width: 400px;
+      height: 80vh;
+      background: black;
+      border: 2px solid #ffc107;
+      border-radius: 10px;
+      color: white;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+      /* Centering the chat layout */
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+    }
+
+    #title-bar {
+      background-color: #ffc107;
+      color: black;
+      text-align: center;
+      padding: 15px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #chat-window {
+      flex: 1;
+      padding: 10px;
+      overflow-y: auto; /* Enables vertical scrolling */
+      border-bottom: 1px solid #ffc107;
+      font-size: 14px;
+    }
+
+    /* Customizing the scroll bar */
+    #chat-window::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    #chat-window::-webkit-scrollbar-thumb {
+      background-color: #ffc107;
+      border-radius: 10px;
+    }
+
+    .message {
+      margin-bottom: 10px;
+    }
+
+    .bot-message {
+      text-align: left;
+      color: #ffc107;
+    }
+
+    .user-message {
+      text-align: right;
+      color: #ffc107;
+    }
+
+    #chat-input {
+      display: flex;
+      border-top: 1px solid #ffc107;
+      padding: 10px;
+      background: black;
+    }
+
+    #input-box {
+      flex: 1;
+      padding: 10px;
+      border: 1px solid #ffc107;
+      border-radius: 5px;
+      outline: none;
+      background: black;
+      color: white;
+    }
+
+    #send-button {
+      background: #ffc107;
+      color: black;
+      border: none;
+      padding: 10px;
+      margin-left: 10px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: bold;
+    }
+
+    #send-button:hover {
+      background: #e6a800;
+    }
+
+    #locked-overlay {
+      display: none;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      padding: 40px;
+      font-size: 18px;
+      background: black;
+      color: #ffc107;
+      width: 100%;
+      height: 100%;
+    }
+
+    #locked-overlay h2 {
+      font-size: 36px;
+      font-weight: bold;
+      margin-bottom: 20px;
+    }
+
+    #locked-overlay p {
+      font-size: 24px;
+      margin-bottom: 30px;
+    }
+
+    @media (max-width: 768px) {
+      #chat-container {
+        width: 95%;
+        height: 85vh;
+      }
+
+      #title-bar {
+        font-size: 16px;
+      }
+
+      #chat-window {
+        font-size: 13px;
+        padding: 8px;
+      }
+
+      #input-box {
+        padding: 8px;
+        font-size: 14px;
+      }
+
+      #send-button {
+        padding: 8px 12px;
+        font-size: 14px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div id="username-overlay">
+    <h1>😏 Welcome to my world!</h1>
+    <p>Join me for 3 days trial of excitement!</p>
+    <p>I can't wait to share my page with you 😘. Satisfaction guaranteed. Let's run and play! 🎉</p>
+    <p>By subscribing, you agree not to download, share, or redistribute any content from my site. Legal action will be taken against violators.</p>
+    <input type="text" id="username-input" placeholder="Username" />
+    <button id="start-button">Start Chat</button>
+  </div>
+
+  <div id="chat-container">
+    <div id="title-bar">One Night Friend</div>
+    <div id="chat-window">
+      <div class="bot-message message">Hi! Your account has not yet been upgraded or registered. Please sign up and upgrade your account! I'll send you my 5-minute teaser to get connected.</div>
+    </div>
+    <div id="chat-input">
+      <input type="text" id="input-box" placeholder="Type your message..." />
+      <button id="send-button">Send</button>
+    </div>
+  </div>
+
+  <div id="locked-overlay">
+    <h2>Let's Connect!</h2>
+    <p>Unlock more personalized chats and features for just $4.99. Ready to take the next step?</p>
+  </div>
+
+  <script>
+    const usernameOverlay = document.getElementById("username-overlay");
+    const usernameInput = document.getElementById("username-input");
+    const startButton = document.getElementById("start-button");
+    const chatContainer = document.getElementById("chat-container");
+    const chatWindow = document.getElementById("chat-window");
+    const inputBox = document.getElementById("input-box");
+    const sendButton = document.getElementById("send-button");
+    const lockedOverlay = document.getElementById("locked-overlay");
+
+    let messageCount = 0;
+    let username = "";
+
+    function addMessage(content, className) {
+      const message = document.createElement("div");
+      message.className = `message ${className}`;
+      message.textContent = content;
+      chatWindow.appendChild(message);
+      chatWindow.scrollTop = chatWindow.scrollHeight; // Scroll to the bottom
+    }
+
+    function botReply(message, delay) {
+      setTimeout(() => {
+        addMessage(message, "bot-message");
+      }, delay);
+    }
+
+    startButton.addEventListener("click", () => {
+      const enteredName = usernameInput.value.trim();
+      if (enteredName) {
+        username = enteredName;
+        usernameOverlay.style.display = "none";
+        chatContainer.style.display = "flex";
+        addMessage(`Welcome, ${username}! Let’s get to know each other.`, "bot-message");
+      } else {
+        alert("Please enter your username to continue.");
+      }
+    });
+
+    sendButton.addEventListener("click", () => {
+      const userMessage = inputBox.value.trim();
+      if (userMessage) {
+        addMessage(userMessage, "user-message");
+        inputBox.value = "";
+        messageCount++;
+
+        if (messageCount === 1) {
+          botReply(`You know, ${username}, I’ve got exclusive content just for you! You can unlock it all by upgrading your account.`, 1000);
+        } else if (messageCount === 2) {
+          botReply("For just $4.99, you can enjoy personalized chats and premium content. Cancel anytime with no commitment. What do you think?", 2000);
+        } else if (messageCount === 3) {
+          botReply("Don't miss out! Upgrade now to enjoy everything I have to offer. 😊", 3000);
+          lockedOverlay.style.display = "flex";
+          chatContainer.style.display = "none";
+        }
+      }
+    });
+  </script>
+</body>
+</html>
